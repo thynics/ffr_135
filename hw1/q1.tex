@@ -1,0 +1,79 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- Minimal, readable setup ---
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}   % for figures
+\usepackage{booktabs}   % for nicer tables
+\usepackage{hyperref}   % for links (email)
+\hypersetup{colorlinks=true, linkcolor=black, urlcolor=blue}
+\setcounter{secnumdepth}{2} % number sections and subsections only
+
+% --- Title block ---
+\title{Question 1}
+\author{Cheng Long\\
+Chalmers University of Technology (CTH)\\
+\href{mailto:chenglo@chalmers.se}{chenglo@chalmers.se}}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% --- Body: Use only \section and \subsection ---
+\section{Methods}
+\subsection{Build Functions}
+Based on an $n$-dimensional input, a function can be abstracted as a truth table. Specifically, 
+\texttt{build\_bool\_function\_tables} returns all possible function truth tables, 
+while \texttt{sample\_function\_tables} samples a specific number of them.
+
+\subsection{Validation}
+If a truth table can be perfectly fitted by a perceptron, it is considered linearly separable. 
+The result is quickly verified using the SVM library in \texttt{scikit-learn}.
+
+\section{Result}
+\subsection{Table}
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|r|r|r|r|r|r|}
+\hline
+$n$ & total & 20ep\_sep & 20ep\_frac & oracle\_sep & oracle\_frac & accuracy \\
+\hline
+2 &    16 &   14 & 0.87500 &   14 & 0.87500 & 1.00000 \\
+3 &   256 &  104 & 0.40625 &  104 & 0.40625 & 1.00000 \\
+4 & 10000 &  284 & 0.02840 &  284 & 0.02840 & 1.00000 \\
+5 & 10000 &    0 & 0.00000 &    0 & 0.00000 & 1.00000 \\
+\hline
+\end{tabular}
+\caption{Results of perceptron training and SVM verification}
+\label{tab:results}
+\end{table}
+
+\subsection{Discussion}
+\begin{enumerate}
+    \item The results are fully consistent with the SVM verification. According to references, the proportions for $n=2,3$ are consistent, and those for $n=4,5$ are also correct.
+    \item As the dimension increases, the number of linearly separable functions decreases sharply.
+    \item To obtain a meaningful proportion at $n=5$, it is necessary to further increase the sample size.
+\end{enumerate}
+\newpage
+\subsection{n=5}
+\begin{table}[h]
+\centering
+\begin{tabular}{ccccccc}
+\toprule
+$n$ & total & 20ep\_sep & 20ep\_frac & oracle\_sep & oracle\_frac & accuracy \\
+\midrule
+5 &    10000 &         0 & 0.00000 &         0 & 0.00000 & 1.00000 \\
+5 &   100000 &         0 & 0.00000 &         0 & 0.00000 & 1.00000 \\
+5 &  1000000 &        26 & 0.00003 &        26 & 0.00002 & 1.00000 \\
+\bottomrule
+\end{tabular}
+\caption{n=5 and sample until 1\_000\_000}
+\label{tab:results_n}
+\end{table}
+
+% (Optional) References (simple manual list)
+% \section*{References}
+% \begin{itemize}
+%   \item Author, A. (Year). \textit{Title}. Journal/Conference.
+% \end{itemize}
+
+\end{document}
